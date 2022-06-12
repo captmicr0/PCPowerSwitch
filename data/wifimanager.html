@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ESP Wi-Fi Manager</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/png" href="favicon.png">
+		<link rel="stylesheet" type="text/css" href="style.css">
+        <style type="text/css">
+        input[type=submit] {
+            margin-top: 15px !important;
+            width: 30%;
+        }
+        </style>
+        <script type="text/javascript">
+		submitFormAjax = (e)=>{
+			//prevent default behavior
+			e.preventDefault();
+
+			//submit form
+			var form = e.target;
+			fetch(form.action, {
+				method: form.method,
+				body: new URLSearchParams(new FormData(form)).toString(),
+				headers: new Headers({
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}),
+			}).then((r)=>{
+                if (r.status==200) {
+                    r.text().then((t)=>{
+                        alert(t);
+                    }).catch((e)=>{});
+                }
+            }).catch((e)=>{});
+			
+			//prevent default behavior
+			return false;
+		}
+
+		loadFormAjax = (form)=>{
+			var entires = (new FormData(form)).entries();
+			for (const pair of entires) {
+				var params = new URLSearchParams({name: pair[0]}).toString();
+				fetch(form.action + '?' + params).then((r)=>{
+					if (r.status==200) {
+						r.text().then((t)=>{
+							document.querySelector('input[name='+pair[0]+']').value = t;
+						}).catch((e)=>{});
+					}
+				}).catch((e)=>{});
+			}
+		}
+
+		window.addEventListener('load', (e)=>{
+			var form = document.querySelector('form');
+			form.addEventListener('submit', submitFormAjax);
+			setTimeout(loadFormAjax(form), 1000);
+		});
+		</script>
+	</head>
+	<body>
+		<div class="topnav">
+			<h1>ESP Wi-Fi Manager</h1>
+		</div>
+		<div class="content">
+			<div class="card-grid">
+				<div class="card">
+					<form action="/wifimanager.cfg" method="POST">
+						<p>
+							<label for="ssid">SSID</label>
+							<input type="text" id="ssid" name="ssid" value="" required><br>
+							<label for="pass">Password</label>
+							<input type="text" id="password" name="password" value=""><br>
+							<label for="ip">IP Address</label>
+							<input type="text" id="ipaddress" name="ipaddress" value=""><br>
+							<label for="gateway">Gateway</label>
+							<input type="text" id="gateway" name="gateway" value=""><br>
+							<label for="gateway">Subnet</label>
+							<input type="text" id="subnet" name="subnet" value="225.225.225.0"><br>
+							<label for="gateway">DNS</label>
+							<input type="text" id="dns" name="dns" value="1.1.1.1"><br>
+							<label for="gateway">Alt DNS</label>
+							<input type="text" id="altdns" name="altdns" value="1.0.0.1"><br>
+							<input type="submit" value="Submit">
+							<input type="text" id="mdns" name="mdns" value=""><br>
+							<input type="submit" value="Submit">
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ESP PC POWER</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/png" href="favicon.png">
+		<link rel="stylesheet" type="text/css" href="style.css">
+        <style type="text/css">
+        button {
+            margin-top: 2px !important;
+            width: 43%;
+        }
+        button[id="on"] {
+            margin-left: 5%;
+            float: left;
+        }
+        button[id="off"] {
+            margin-right: 5%;
+            float: right;
+        }
+        label {
+            display:inline-block;
+            min-width: 25%;
+            margin-top: 15px;
+        }
+        </style>
+        <script type="text/javascript">
+        reqpage = (pg)=>{ fetch(pg).catch((e)=>{}) };
+
+        addevent = (sel, event, fn)=>{
+            var e = document.querySelector(sel);
+            e.addEventListener(event, fn, false);
+        }
+
+        led_text = (txt)=>{
+		    var e = document.querySelector('#led');
+            e.innerText = txt;
+        };
+
+        led_update = ()=>{
+            fetch('/led.fn').then((r)=>{
+                if (r.status==200) {
+                    r.text().then((t)=>{
+                        led_text(t);
+                    }).catch((e)=>led_text('ERROR'));
+                } else led_text('ERROR');
+            }).catch((e)=>led_text('ERROR'));
+        };
+
+        window.addEventListener('load', (e)=>{
+            addevent('#on', 'click', ()=>{ reqpage('/press.fn?time=400'); });
+            addevent('#off', 'click', ()=>{ reqpage('/press.fn?time=4700'); });
+            setInterval(led_update, 1*1000);
+        });
+        </script>
+	</head>
+	<body>
+		<div class="topnav">
+			<h1>ESP PC Power</h1>
+		</div>
+		<div class="content">
+			<div class="card-grid">
+				<div class="card">
+                    <p>
+                        <button id="on">ON</button>
+                        <button id="off">OFF</button>
+                    </p>
+                    <p>
+                        <label>POWER LED:</label>
+                        <label id="led"></label>
+                    </p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -67,21 +67,21 @@
 					<form action="/wifimanager.cfg" method="POST">
 						<p>
 							<label for="ssid">SSID</label>
-							<input type="text" id="ssid" name="ssid" value="" required><br>
+							<input type="text" id="ssid" name="ssid" maxlength="31" value="" required><br>
 							<label for="pass">Password</label>
-							<input type="text" id="password" name="password" value=""><br>
+							<input type="text" id="password" name="password" maxlength="63" value=""><br>
 							<label for="ip">IP Address</label>
-							<input type="text" id="ipaddress" name="ipaddress" value=""><br>
+							<input type="text" id="ipaddress" name="ipaddress" maxlength="15" value=""><br>
 							<label for="gateway">Gateway</label>
-							<input type="text" id="gateway" name="gateway" value=""><br>
+							<input type="text" id="gateway" name="gateway" maxlength="15" value=""><br>
 							<label for="gateway">Subnet</label>
-							<input type="text" id="subnet" name="subnet" value="225.225.225.0"><br>
+							<input type="text" id="subnet" name="subnet" maxlength="15" value="225.225.225.0"><br>
 							<label for="gateway">DNS</label>
-							<input type="text" id="dns" name="dns" value="1.1.1.1"><br>
+							<input type="text" id="dns" name="dns" maxlength="15" value="1.1.1.1"><br>
 							<label for="gateway">Alt DNS</label>
-							<input type="text" id="altdns" name="altdns" value="1.0.0.1"><br>
-							<input type="submit" value="Submit">
-							<input type="text" id="mdns" name="mdns" value=""><br>
+							<input type="text" id="altdns" name="altdns" maxlength="15" value="1.0.0.1"><br>
+							<label for="gateway">mDNS Name</label>
+							<input type="text" id="mdns" name="mdns" maxlength="31" value="pcpowerswitch"><br>
 							<input type="submit" value="Submit">
 						</p>
 					</form>

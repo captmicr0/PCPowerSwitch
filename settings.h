@@ -16,7 +16,7 @@ typedef struct WiFiData {
     char subnet[16];
     char dns[16];
     char altdns[16];
-    char mdns[16];
+    char mdns[32];
 } WiFiData;
 
 typedef struct Settings {

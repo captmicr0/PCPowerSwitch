@@ -9,7 +9,8 @@ bool pcpower_setup(void)
     #endif //PCPOWER_SW
 
     #if defined(PCPOWER_LED)
-    pinMode(PCPOWER_LED, INPUT_PULLDOWN_16);
+    //pinMode(PCPOWER_LED, INPUT_PULLDOWN_16); //there is an external pull-down now
+    pinMode(PCPOWER_LED, INPUT);
     #endif // PCPOWER_LED
 
     return true;
